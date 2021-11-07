@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Rizwan Ansari</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://rizwanansari.net</PackageProjectUrl>
+    <PackageReleaseNotes>First Release</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/rizansari/MultipartParserCore</RepositoryUrl>
+    <Description>Basic Parser for Multipart Messages especially multipart/x-mixed-replace with boundary</Description>
+    <PackageTags>Multipart Messages,multipart/x-mixed-replace, Boundary</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+</Project>

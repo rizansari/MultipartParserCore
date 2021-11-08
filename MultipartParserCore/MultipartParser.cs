@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace MultipartParserCore
 {
@@ -24,7 +25,7 @@ namespace MultipartParserCore
             _messageType = messageType;
         }
 
-        public void StartParsing()
+        public void StartParsing(CancellationToken cts)
         {
             try
             {
@@ -34,7 +35,7 @@ namespace MultipartParserCore
 
                 var sr = new StreamReader(_stream, encoding: _encoding);
                 string data = sr.ReadLine();
-                while (data != null)
+                while (data != null && !cts.IsCancellationRequested)
                 {
                     if (data.Trim() == _boundaryWithDashes)
                     {

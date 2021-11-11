@@ -15,7 +15,7 @@ namespace MultipartParserConsoleApp
 
                 MultipartParserCore.MultipartParser parser = new MultipartParserCore.MultipartParser(stream, "DigifortBoundary");
                 parser.OnMessage += Parser_OnMessage;
-                parser.StartParsing();
+                parser.StartParsing(new System.Threading.CancellationToken());
             }
         }
 

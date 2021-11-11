@@ -37,7 +37,13 @@ namespace MultipartParserCore
                 string data = sr.ReadLine();
                 while (data != null && !cts.IsCancellationRequested)
                 {
-                    if (data.Trim() == _boundaryWithDashes)
+                    data = data.Trim();
+
+                    if (data == string.Empty)
+                    {
+                        // pass
+                    }
+                    else if (data.Trim() == _boundaryWithDashes)
                     {
                         if (sb.Length > 0)
                         {
@@ -46,9 +52,31 @@ namespace MultipartParserCore
                             sb.Append(data.Trim());
                         }
                     }
+                    else if (data.StartsWith("Content-Type:") || data.StartsWith("Content-Length:"))
+                    {
+                        // pass
+                    }
+                    else if (data.Contains(_boundaryWithDashes))
+                    {
+                        int index = data.IndexOf(_boundaryWithDashes);
+
+                        string temp = data.Substring(0, index);
+                        sb.Append(temp);
+                        if (temp.EndsWith("}"))
+                        {
+                            // try to parse json
+                            string temp2 = sb.ToString();
+                            temp2 = temp2.Substring(temp2.IndexOf("{"));
+                            if (ValidateJSON(temp2))
+                            {
+                                result = sb.ToString();
+                                sb = new StringBuilder();
+                            }
+                        }
+                    }
                     else
                     {
-                        string temp = data.Trim();
+                        string temp = data;
                         sb.Append(temp);
                         if (temp.EndsWith("}"))
                         {
